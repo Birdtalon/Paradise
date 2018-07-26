@@ -896,6 +896,40 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		to_chat(usr, "<span class='warning'>[src] has no weapons!</span>")
 		return
 	equipment_system.weapon_system.fire_weapons()
+	
+/obj/spacepod/verb/toggle_left()
+	set name = "Toggle Left Gun"
+	set desc = "Toggle left gun on/off."
+	set category = "Spacepod"
+	set src = usr
+	
+	if(usr.incapacitated())
+		return
+	
+	if(usr != src.pilot)
+		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair.</span>")
+		return
+	if(!equipment_system.weapon_system)
+		to_chat(usr, "<span class='warning'>[src] has no weapons!</span>")
+		return
+	equipment_system.toggle_left_weapon()
+	
+/obj/spacepod/verb/toggle_right()
+	set name = "Toggle Right Gun"
+	set desc = "Toggle right gun on/off."
+	set category = "Spacepod"
+	set src = usr
+	
+	if(usr.incapacitated())
+		return
+	
+	if(usr != src.pilot)
+		to_chat(usr, "<span class='notice'>You can't reach the controls from your chair.</span>")
+		return
+	if(!equipment_system.weapon_system)
+		to_chat(usr, "<span class='warning'>[src] has no weapons!</span>")
+		return
+	equipment_system.toggle_right_weapon()
 
 /obj/spacepod/verb/unload()
 	set name = "Unload Cargo"
