@@ -28,18 +28,21 @@
 					firstloc = get_turf(my_atom)
 					secondloc = get_step(firstloc,NORTH)
 		olddir = dir
-		var/obj/item/projectile/projone = new projectile_type(firstloc)
-		var/obj/item/projectile/projtwo = new projectile_type(secondloc)
-		projone.starting = get_turf(my_atom)
-		projone.firer = usr
-		projone.def_zone = "chest"
-		projtwo.starting = get_turf(my_atom)
-		projtwo.firer = usr
-		projtwo.def_zone = "chest"
+		if(left_enabled)
+			var/obj/item/projectile/projone = new projectile_type(firstloc)
+			projone.starting = get_turf(my_atom)
+			projone.firer = usr
+			projone.def_zone = "chest"
+		if(right_enabled)
+			projtwo.starting = get_turf(my_atom)
+			projtwo.firer = usr
+			projtwo.def_zone = "chest"
 		spawn()
 			playsound(src, fire_sound, 50, 1)
-			projone.dumbfire(my_atom.dir)
-			projtwo.dumbfire(my_atom.dir)
+			if(left_enabled)
+				projone.dumbfire(my_atom.dir)
+			if(right_enabled)
+				projtwo.dumbfire(my_atom.dir)
 		sleep(2)
 	my_atom.next_firetime = world.time + fire_delay
 
@@ -83,6 +86,8 @@
 	var/shots_per = 1
 	var/fire_sound
 	var/fire_delay = 15
+	var/left_enabled = TRUE
+	var/right_enabled = TRUE
 
 /obj/item/spacepod_equipment/weaponry/taser
 	name = "disabler system"
